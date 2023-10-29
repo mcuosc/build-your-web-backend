@@ -1,0 +1,4 @@
+.env
+*.pem
+*.lock
+.DS_Store
