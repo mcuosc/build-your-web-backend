@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 from typing import Optional
 from pydantic import BaseModel
-from fastapi import FastAPI
+from fastapi import FastAPI, status
 
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -46,10 +46,10 @@ class domain(BaseModel):
 @app.get("/{path}")
 async def read_root(path: Optional[str] = None):
     if path == None:
-        return JSONResponse({'result': 'no', 'error': 'no path'})
+        return JSONResponse({'result': 'no', 'error': 'no path'}, status_code=status.HTTP_400_BAD_REQUEST)
     try:
         domain = f'{path}.{DOMAIN}'.encode('utf-8').decode('idna').lower()
         html = get_html(domain)
     except Exception as e:
-        return JSONResponse({'result': 'no', 'error': str(e)})
-    return HTMLResponse(content=html, status_code=200)
+        return JSONResponse({'result': 'no', 'error': str(e)}, status_code=status.HTTP_400_BAD_REQUEST)
+    return HTMLResponse(content=html, status_code=status.HTTP_200_OK)
