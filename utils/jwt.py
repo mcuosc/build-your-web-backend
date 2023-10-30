@@ -37,7 +37,7 @@ def create_access_token(*, data: dict, expires_delta: timedelta = None):
         expire = datetime.utcnow() + timedelta(minutes=API_EXPIRE_MINUTES)
     email = data.get('email', '')
     if not valid_email(email):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Could not validate credentials')
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='登錄信箱必須使用 @me.mcu.edu.tw 或 @ms1.mcu.edu.tw ')
     to_encode.update({'exp': expire})
 
     encoded_jwt = jwt.encode(to_encode, API_SECRET_KEY, algorithm=API_ALGORITHM)
