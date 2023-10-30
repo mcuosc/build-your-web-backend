@@ -44,7 +44,7 @@ async def token_validation_exception_handler(request: Request, exc: TokenValidat
 
 @auth_app.get('/logout')
 async def logout(request: Request):
-    response = RedirectResponse(url=FRONTEND_URL, status_code=status.HTTP_302_FOUND)
+    response = JSONResponse({'result': 'ok'}, status_code=status.HTTP_200_OK)
     response.set_cookie('user_token', '', samesite='none', secure=True, max_age=0, httponly=True)
     return response
 
